@@ -21,7 +21,7 @@ class Subsession(BaseSubsession):
     is_paid = models.BooleanField()
 
 
-def setup_round(self)
+def setup_round(self):
     self.csf = "share"
     self.is_paid = True
     for group in self.get_groups():
@@ -48,6 +48,9 @@ class Player(BasePlayer):
     prize_won = models.FloatField()
     earnings = models.CurrencyField()
 
+    def setup_round(self):
+        self.endowment = C.ENDOWMENT
+
 
 
 
@@ -67,7 +70,8 @@ class Intro(Page):
 
 
 class Decision(Page):
-    pass
+    form_model = 'player'
+    form_fields = ["tickets_purchased"]
 
 
 class ResultsWaitPage(WaitPage):
