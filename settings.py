@@ -8,6 +8,13 @@ SESSION_CONFIGS = [
         ],
         num_demo_participants=3,
     ),
+dict(
+        name="contest_demo",
+        app_sequence=[
+            "contest"
+        ],
+        num_demo_participants=2,
+    ),
     dict(
         name="quiz_demo",
         app_sequence=[
