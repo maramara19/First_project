@@ -10,23 +10,54 @@ class C(BaseConstants):
     NAME_IN_URL = 'contest'
     PLAYERS_PER_GROUP = 2
     NUM_ROUNDS = 3
+    ENDOWMENT = 10
+    COST_PER_TICKET = 0.5
+    PRIZE = 8
+
 
 
 class Subsession(BaseSubsession):
-    pass
+    csf = models.StringField()
+    is_paid = models.BooleanField()
 
+
+def setup_round(self)
+    self.csf = "share"
+    self.is_paid = True
+    for group in self.get_groups():
+        group.cost_per_ticket = C.COST_PER_TICKET
+        group.prize = C.PRIZE
+        for player in group.get_players():
+            player.endowment = C.ENDOWMENT
 
 class Group(BaseGroup):
-    pass
+    cost_per_ticket = models.CurrencyField()
+    prize = models.CurrencyField()
+
+    def setup_round(self):
+        self.cost_per_ticket = C.COST_PER_TICKET
+        self.prize = C.PRIZE
+        for player in self.get_players():
+            player.endowment = C.ENDOWMENT
+
 
 
 class Player(BasePlayer):
-    pass
+    endowment = models.CurrencyField()
+    tickets_purchased = models.IntegerField()
+    prize_won = models.FloatField()
+    earnings = models.CurrencyField()
+
+
 
 
 # PAGES
 class StartRound(WaitPage):
-    pass
+    wait_for_all_groups = True
+
+    @staticmethod
+    def after_all_players_arrive(subsession):
+        subsession.setup_round()
 
 class Intro(Page):
     @staticmethod
